@@ -69,6 +69,11 @@ public class CraftingRecipeProvider extends ExtraBotanyRecipeProvider {
 	}
 
 	private void registerMain(RecipeOutput consumer) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ExtraBotanyBlocks.livingrockBarrel)
+				.define('R', BotaniaBlocks.LIVINGROCK)
+				.pattern("R R").pattern("R R").pattern("RRR")
+				.unlockedBy("has_livingrock", conditionsFromItem(BotaniaBlocks.LIVINGROCK))
+				.save(consumer);
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ExtraBotanyItems.theChaos)
 				.define('S', ExtraBotanyTags.Items.INGOTS_SHADOWIUM)
 				.define('P', ExtraBotanyTags.Items.INGOTS_PHOTONIUM)

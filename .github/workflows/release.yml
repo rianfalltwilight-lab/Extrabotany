@@ -62,7 +62,8 @@ jobs:
           set -euo pipefail
           title="ExtraBotany 1.21.1 ${VERSION} — SCEX AI-assisted preview"
           if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
-            gh release upload "${GITHUB_REF_NAME}" build/public-release/* --clobber
+            echo "Release already exists; refusing to overwrite published assets."
+            exit 0
             gh release edit "${GITHUB_REF_NAME}" --prerelease --title "${title}" --notes-file "${NOTES}"
           else
             gh release create "${GITHUB_REF_NAME}" build/public-release/* --prerelease --title "${title}" --notes-file "${NOTES}"

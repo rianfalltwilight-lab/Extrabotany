@@ -67,12 +67,7 @@ public class GaiaIII extends Gaia {
 		if (!arena.checksModern(player, world, stack)) {
 			return false;
 		}
-		if (!arena.checkGuardianInventoryStrict(world, io.github.lounode.extrabotany.common.item.ExtraBotanyItems.voidArchives)) {
-			if (!world.isClientSide()) {
-				player.sendSystemMessage(Component.translatable("extrabotany.message.guardian_no_response").withStyle(ChatFormatting.RED));
-			}
-			return false;
-		}
+		// Gaia III checks equipment during combat; inventory/Curios never block summoning.
 
 		//all checks ok, spawn the boss
 		if (!world.isClientSide()) {

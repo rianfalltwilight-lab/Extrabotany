@@ -786,7 +786,7 @@
   "extrabotany.page.firstfractal0": "The $(item)First Fractal$() is the ultimate blade, forged from the very concept of sharpness itself.$(br2)An Infinity +1 Sword.",
   "extrabotany.page.firstfractal1": "$(item)First Fractal$() is created in the $(o)Runic Altar$().",
   "curios.identifier.mount": "Mount",
-  "commands.extrabotany.itemcheck.on": "Guardian item check enabled (summon gate + in-fight disarm)",
+  "commands.extrabotany.itemcheck.on": "Gaia III combat equipment disarm enabled (no summon gate); Void Herrscher still checks summon inventory",
   "commands.extrabotany.itemcheck.off": "Guardian item check disabled; any modded items may now enter the boss fight",
   "commands.extrabotany.itemcheck.query": "Guardian item check is currently: %s",
   "commands.extrabotany.state.on": "ON",

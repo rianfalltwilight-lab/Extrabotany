@@ -104,6 +104,10 @@ public final class FullLegacyGameTests {
             helper.assertTrue(old.get(key).equals(saved.get(key)), "Gaia III phase state lost: " + key);
         var method = gaia.getClass().getDeclaredMethod("spawnFogWave", int.class); method.setAccessible(true);
         var area = new net.minecraft.world.phys.AABB(home).inflate(40);
+        // The test structure is smaller than the barrage. Load its entire query area
+        // so counts do not depend on the randomized GameTest origin's chunk boundary.
+        for (int x = (home.getX() - 40) >> 4; x <= (home.getX() + 40) >> 4; x++)
+            for (int z = (home.getZ() - 40) >> 4; z <= (home.getZ() + 40) >> 4; z++) level.getChunk(x, z);
         int[] expected = {64, 80, 72, 80, 128, 102};
         for (int wave = 0; wave < expected.length; wave++) {
             method.invoke(gaia, wave);

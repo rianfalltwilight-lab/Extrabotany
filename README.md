@@ -1,10 +1,12 @@
 # SCEX ExtraBotany 1.21.1
 
+**[2.0-scex.6-dev：直接下载运行 JAR / Download JAR](https://github.com/rianfalltwilight-lab/scex-extrabotany/releases/download/v2.0-scex.6-dev/extrabotany-neoforge-1.21.1-2.0-scex.6-dev.jar)** · [更新说明 / Release notes](docs/releases/2.0-scex.6-dev.md)
+
 > 这是 Space Creator EX（SCEX）维护的 ExtraBotany 非官方 Minecraft 1.21.1 / NeoForge 移植版。1.21.1 移植、缺陷修复、测试与公开发布整理主要由 OpenAI Codex 在维护者监督下辅助完成；详见 [AI 参与开发声明](AI-GENERATED.md)。
 
 [English](README_en.md)
 
-当前公开预览版本为 **2.0-scex.5-dev**。项目基于 [Lounode/ExtraBotany](https://github.com/Lounode/ExtraBotany) 的 `release-1.20.1-1.9.2` / `a4d4f2a968d559752fa3bd6e609544473109d983`，保留上游作者、MIT 许可证与资源署名。本仓库不是 Lounode、Botania 或 NeoForge 的官方发行版。
+当前公开预览版本为 **2.0-scex.6-dev**。项目基于 [Lounode/ExtraBotany](https://github.com/Lounode/ExtraBotany) 的 `release-1.20.1-1.9.2` / `a4d4f2a968d559752fa3bd6e609544473109d983`，保留上游作者、MIT 许可证与资源署名。本仓库不是 Lounode、Botania 或 NeoForge 的官方发行版。
 
 ## 环境与安装
 
@@ -19,7 +21,7 @@
 
 从 [Releases](https://github.com/rianfalltwilight-lab/scex-extrabotany/releases) 下载运行 JAR，客户端与服务端使用同一文件。不要与其他使用 `extrabotany` 模组 ID 的 JAR 同时安装。JEI 与 KubeJS 为可选集成。
 
-SCEX 整包中的森林法杖绑定由独立的 [SCEX Botania / ExtraBotany 森林法杖兼容层](https://github.com/rianfalltwilight-lab/scex-botania-extrabotany-compat) `1.3.0` 提供。它不包含在 ExtraBotany 发行包内，而是一个需要客户端与服务端同时安装的版本锁定桥接；`1.3.0` 只能与 `2.0-scex.5-dev` 配对，用于花→发射器、花→魔力池和魔力池→Manalink 的选择、绑定与保存。
+SCEX 整包中的森林法杖绑定由独立的 [SCEX Botania / ExtraBotany 森林法杖兼容层](https://github.com/rianfalltwilight-lab/scex-botania-extrabotany-compat) `1.4.0` 提供。它不包含在 ExtraBotany 发行包内，而是一个需要客户端与服务端同时安装的版本锁定桥接；`1.4.0` 只能与 `2.0-scex.6-dev` 配对，用于花→发射器、花→魔力池和魔力池→Manalink 的选择、绑定与保存。
 
 ## 本次恢复范围
 
@@ -30,7 +32,7 @@ SCEX 整包中的森林法杖绑定由独立的 [SCEX Botania / ExtraBotany 森�
 
 详细实现与证据边界见 [完整恢复报告](FULL_LEGACY_RESTORE.md)、[移植记录](PORTING.md) 和 [独立复核](AUDIT_REVIEW.md)。
 
-## 验证摘要
+## 旧版恢复验证摘要（scex.5）
 
 - 19 / 19 NeoForge GameTest 通过。
 - 与旧 `scex.1` 运行包对照的注册项缺失为零。

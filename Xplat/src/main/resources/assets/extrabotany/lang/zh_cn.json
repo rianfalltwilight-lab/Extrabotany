@@ -786,7 +786,7 @@
   "extrabotany.page.firstfractal0": "$(item)最初分型$()是终极之刃，由“锐利”这一概念本身锻造而成。$(br2)所谓无限+1之剑。",
   "extrabotany.page.firstfractal1": "在$(o)符文祭坛$()中合成$(item)最初分型$()。",
   "curios.identifier.mount": "坐骑",
-  "commands.extrabotany.itemcheck.on": "已开启盖亚守护者III/空之律者的身上物品检测(召唤门禁 + 战斗缴械)",
+  "commands.extrabotany.itemcheck.on": "已开启盖亚三战斗装备缴械（不拦截召唤）；空之律者仍检测召唤物品",
   "commands.extrabotany.itemcheck.off": "已关闭身上物品检测,现在可携带任意模组物品进入 Boss 战",
   "commands.extrabotany.itemcheck.query": "当前身上物品检测: %s",
   "commands.extrabotany.state.on": "开启",

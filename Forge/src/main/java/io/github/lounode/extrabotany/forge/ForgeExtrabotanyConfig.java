@@ -154,7 +154,7 @@ public class ForgeExtrabotanyConfig {
 			builder.pop();//End telemetry
 
 			builder.push("gaia");
-			guardianItemCheck = builder.comment("Check guardian summon inventory and combat disarm whitelist.").define("guardianItemCheck", true);
+			guardianItemCheck = builder.comment("Gaia III: check equipped/held items during combat, never block summoning. Void Herrscher retains its summon inventory check.").define("guardianItemCheck", true);
 			disableGaiaDisArm = builder
 					.comment("""
 							设为 true 来禁用盖亚的缴械技能
@@ -162,11 +162,11 @@ public class ForgeExtrabotanyConfig {
 					.define("disableGaiaDisarm", false);
 			gaiaSpawnUnCheckList = builder
 					.comment("""
-							盖亚三生成时不检查的ModID或者物品
+							盖亚三战斗缴械额外允许的ModID或者物品（保留旧配置键）
 							示例：minecraft, sophisticatedbackpacks:backpack
-							Items or ModIDs that gaia ignore to check when spawn
+							Additional items or ModIDs allowed by Gaia III combat disarm (legacy config key)
 							e.g. minecraft, sophisticatedbackpacks:backpack""")
-					.defineList("gaiaSpawnUnCheckList", List.of("minecraft", "botania", "extrabotany"), () -> "minecraft", o -> o instanceof String);
+					.defineList("gaiaSpawnUnCheckList", List.of("minecraft", "botania", "extrabotany", "mythicbotany"), () -> "minecraft", o -> o instanceof String);
 			builder.pop();//End gaia
 
 			builder.push("fakePlayer");
