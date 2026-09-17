@@ -109,6 +109,9 @@ dependencies {
 
 // Pin resolved transitive inputs as well as the direct versions above.
 dependencyLocking {
+    // Linux adds the native epoll runtime; keep each platform strictly locked.
+    lockFile = file(System.getProperty("os.name").toLowerCase(java.util.Locale.ROOT).contains("linux")
+        ? "gradle-linux.lockfile" : "gradle.lockfile")
     // Maven reports this timestamped artifact as 456-SNAPSHOT in its metadata.
     // A generated SNAPSHOT lock conflicts with the exact timestamp coordinate.
     ignoredDependencies.add("vazkii.botania:botania-neoforge-${minecraft_version}")

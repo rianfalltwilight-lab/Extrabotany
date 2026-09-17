@@ -3,7 +3,7 @@
 $script:ExtraBotanySourceTopFiles = @(
     '.gitattributes', '.gitignore', 'AI-GENERATED.md', 'AUDIT_REVIEW.md',
     'authorization.png', 'build.gradle', 'contributors.properties', 'crowdin.yml',
-    'FULL_LEGACY_RESTORE.md', 'gradle.lockfile', 'gradle.properties', 'gradlew',
+    'FULL_LEGACY_RESTORE.md', 'gradle-linux.lockfile', 'gradle.lockfile', 'gradle.properties', 'gradlew',
     'gradlew.bat', 'LEGACY_CANDY_COMPAT.md', 'LICENSE', 'NOTICE', 'PORTING.md',
     'README.md', 'README_en.md', 'settings.gradle'
 )
