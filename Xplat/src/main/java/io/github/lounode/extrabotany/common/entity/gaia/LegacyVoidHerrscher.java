@@ -215,13 +215,11 @@ public final class LegacyVoidHerrscher extends Gaia {
     private void voidJudge() {
         setInvulTime(120); var home = getHome().pos(); teleportTo(home.getX() + .5, home.getY() + 2, home.getZ() + .5);
         var look = getLookAngle().multiply(1, 0, 1); if (look.lengthSqr() < 1E-6) look = Vec3.directionFromRotation(0, getYRot()); look = look.normalize().scale(-2);
-        var direction = look.normalize(); var axis = direction.cross(new Vec3(-1, 0, -1)); if (axis.lengthSqr() < 1E-6) axis = new Vec3(1, 0, 0); axis = axis.normalize();
         for (int i = 0; i < 24; i++) {
-            int row = i / 8, column = i % 8; double angle = column * Math.PI / 7 - Math.PI / 2;
-            var vector = axis.scale(row * 3.5 + 5); vector = vector.scale(Math.cos(angle)).add(direction.cross(vector).scale(Math.sin(angle))).add(direction.scale(direction.dot(vector) * (1 - Math.cos(angle))));
-            if (vector.y < 0) vector = vector.multiply(1, -1, 1);
+            int row = i / 8;
+            var vector = io.github.lounode.extrabotany.common.item.legacy.LegacySubspaceSpearItem.domainOffset(look, i);
             var end = position().add(0, getBbHeight() * .5, 0).add(look).add(0, 1.6, row * .1).add(vector);
-            var portal = new LegacySubspace(LegacySubspace.TYPE, level()); portal.setOwner(this); portal.configure(0, 120, 15 + random.nextInt(12), 10 + random.nextInt(10), 3 + random.nextFloat() * .5F, Mth.wrapDegrees(-getYRot() + 180));
+            var portal = new LegacySubspace(LegacySubspace.TYPE, level()); portal.setOwner(this); portal.configure(2, 120, 15 + random.nextInt(12), 10 + random.nextInt(10), 3 + random.nextFloat() * .5F, Mth.wrapDegrees(-getYRot() + 180));
             portal.setPos(end.x, end.y - .5 + random.nextFloat(), end.z); portal.setYRot(getYRot()); level().addFreshEntity(portal);
             if (i == 1) playSound(ExtraBotanySounds.SPEAR_OF_SUBSPACE_USE, 1, 1);
         }

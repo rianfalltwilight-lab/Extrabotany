@@ -1,72 +1,64 @@
 package io.github.lounode.extrabotany.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.lounode.extrabotany.common.entity.LegacyLance;
 import io.github.lounode.extrabotany.common.entity.LegacySwordDomain;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.inventory.InventoryMenu;
 
-/** Original scex.1 texture planes and animation parameters, shared without duplicating vertex code. */
+/** Original master lance mesh, extruded sword icons and ModelVoid cube. */
 public final class LegacyBossSupportRenderer<T extends Entity> extends EntityRenderer<T> {
-    public LegacyBossSupportRenderer(EntityRendererProvider.Context context) { super(context); }
-
-    @Override public ResourceLocation getTextureLocation(T entity) {
-        String texture = entity instanceof LegacyLance ? "entity/spearsubspace"
-                : entity instanceof LegacySwordDomain domain ? "item/sworddomain_" + domain.variety() : "entity/wing";
-        return ResourceLocation.fromNamespaceAndPath("extrabotany", "textures/" + texture + ".png");
+    private final ModelPart spear = LegacySubspaceSpearRenderer.mesh();
+    private final ModelPart field;
+    public LegacyBossSupportRenderer(EntityRendererProvider.Context context) {
+        super(context);
+        var mesh = new MeshDefinition();
+        mesh.getRoot().addOrReplaceChild("Shape1", CubeListBuilder.create().texOffs(0, 0).addBox(0, 0, 0, 16, 16, 16),
+                PartPose.offsetAndRotation(-12, 3, -6, .7853982F, .7853982F, .7853982F));
+        field = LayerDefinition.create(mesh, 64, 64).bakeRoot();
     }
-
+    public static ResourceLocation swordModel(int variety) { return ResourceLocation.parse("extrabotany:icon/sworddomain_" + Math.floorMod(variety, 10)); }
+    @Override public ResourceLocation getTextureLocation(T entity) {
+        return entity instanceof LegacySwordDomain ? InventoryMenu.BLOCK_ATLAS
+                : ResourceLocation.parse(entity instanceof LegacyLance ? "extrabotany:textures/entity/spearsubspace.png" : "extrabotany:textures/model/void.png");
+    }
+    @Override public boolean shouldRender(T entity, Frustum frustum, double x, double y, double z) {
+        return entity.shouldRender(x, y, z) && frustum.isVisible(entity.getBoundingBox().inflate(4));
+    }
     @Override public void render(T entity, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
-        float age = entity.tickCount + partial;
-        var vertices = buffers.getBuffer(RenderType.entityTranslucent(getTextureLocation(entity)));
         pose.pushPose();
         if (entity instanceof LegacyLance) {
-            pose.translate(0, 1.6, 0);
-            for (int plane = 0; plane < 4; plane++) {
-                pose.pushPose();
-                pose.mulPose(Axis.YP.rotationDegrees(age * 4 + plane * 45));
-                quad(pose, vertices, .35F, 2.2F, 0xDDFFFFFF, true);
-                pose.popPose();
-            }
-        } else if (entity instanceof LegacySwordDomain) {
-            var camera = entityRenderDispatcher.camera.getPosition();
-            float facing = (float) Math.toDegrees(Math.atan2(camera.z - entity.getZ(), camera.x - entity.getX())) - 90;
-            pose.translate(0, .9, 0);
-            pose.mulPose(Axis.YP.rotationDegrees(facing));
-            pose.mulPose(Axis.ZP.rotationDegrees(age * 6));
-            float scale = 1.2F + Math.min(age / 30, 1) * .6F;
-            pose.scale(scale, scale, scale);
-            quad(pose, vertices, .5F, .5F, 0xEEFFFFFF, false);
+            pose.translate(.5, 1.5, .5); pose.mulPose(Axis.YP.rotationDegrees(entity.getYRot()));
+            // Planted lances have pitch=-90, cancelling the original renderer's initial +90 rotation.
+            pose.scale(1.12F, -1.12F, -1.12F);
+            spear.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(entity))), 0xF000F0, OverlayTexture.NO_OVERLAY);
+        } else if (entity instanceof LegacySwordDomain domain) {
+            pose.scale(3, 3, 3); pose.mulPose(Axis.YP.rotationDegrees(-90)); pose.mulPose(Axis.ZP.rotationDegrees(135));
+            renderSword(domain, pose, buffers);
         } else {
-            pose.translate(0, 1, 0);
-            float pulse = 1.2F + (float) Math.sin(age * .25F) * .15F;
-            pose.scale(pulse, pulse, pulse);
-            int color = ((int) (80 * Math.max(0, 1 - age / 60)) << 24) | 0x8A5CFF;
-            for (int plane = 0; plane < 3; plane++) {
-                pose.pushPose();
-                pose.mulPose(Axis.YP.rotationDegrees(age * 3 + plane * 60));
-                pose.mulPose(Axis.XP.rotationDegrees(90 - plane * 35));
-                quad(pose, vertices, 1.5F, 1.5F, color, false);
-                pose.popPose();
-            }
+            pose.translate(.5, 2, -.5); pose.scale(2.8F, -2.8F, -2.8F);
+            field.render(pose, buffers.getBuffer(RenderType.entityTranslucent(getTextureLocation(entity))), light, OverlayTexture.NO_OVERLAY, 0x4CFF8C05);
         }
-        pose.popPose();
-        super.render(entity, yaw, partial, pose, buffers, light);
+        pose.popPose(); super.render(entity, yaw, partial, pose, buffers, light);
     }
-
-    private static void quad(PoseStack pose, VertexConsumer vertices, float x, float y, int color, boolean up) {
-        for (int corner = 0; corner < 4; corner++) {
-            boolean right = corner == 1 || corner == 2, top = corner >= 2;
-            vertices.addVertex(pose.last().pose(), right ? x : -x, top ? y : -y, 0)
-                    .setColor(color).setUv(right ? 1 : 0, top ? 0 : 1)
-                    .setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(0, up ? 1 : 0, up ? 0 : 1);
-        }
+    @SuppressWarnings("deprecation")
+    private void renderSword(LegacySwordDomain entity, PoseStack pose, MultiBufferSource buffers) {
+        LegacyIconRenderer.render(swordModel(entity.variety()), pose, buffers, 1);
     }
 }

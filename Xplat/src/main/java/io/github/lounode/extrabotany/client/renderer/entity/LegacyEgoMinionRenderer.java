@@ -11,7 +11,7 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 
 public final class LegacyEgoMinionRenderer extends HumanoidMobRenderer<LegacyEgoMinion, HumanoidModel<LegacyEgoMinion>> {
-    public LegacyEgoMinionRenderer(EntityRendererProvider.Context context) { super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER)), .5F); }
+    public LegacyEgoMinionRenderer(EntityRendererProvider.Context context) { super(context, new net.minecraft.client.model.PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false), .5F); }
     @Override public ResourceLocation getTextureLocation(LegacyEgoMinion entity) {
         return Minecraft.getInstance().getCameraEntity() instanceof AbstractClientPlayer player
                 ? player.getSkin().texture() : DefaultPlayerSkin.get(entity.getUUID()).texture();

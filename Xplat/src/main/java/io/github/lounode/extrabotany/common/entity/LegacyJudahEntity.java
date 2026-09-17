@@ -41,6 +41,9 @@ public final class LegacyJudahEntity extends ThrowableItemProjectile {
         entity.variant(variant); entity.entityData.set(FAKE, fake); return entity;
     }
     private void variant(int value) { int id = value >= 0 && value < 3 ? value : 0; entityData.set(VARIANT, id); setItem(new ItemStack(LegacyJudahItem.itemFor(id))); }
+    public int variant() { return entityData.get(VARIANT); }
+    public boolean isSpear() { return spear; }
+    public boolean fake() { return entityData.get(FAKE); }
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) { super.defineSynchedData(builder); builder.define(VARIANT, 0); builder.define(FAKE, false); }
     @Override protected Item getDefaultItem() { return LegacyJudahItem.itemFor(0); }
     @Override protected void onHit(HitResult result) { /* Legacy field objects do not collide through the projectile hit callback. */ }

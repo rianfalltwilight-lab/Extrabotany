@@ -18,7 +18,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public final class LegacyVoidHerrscherRenderer extends HumanoidMobRenderer<LegacyVoidHerrscher, LegacyVoidHerrscherRenderer.Model> {
-    private static final ResourceLocation BODY = ResourceLocation.parse("extrabotany:textures/entity/voidherrscher.png");
+    // The original renderer binds the 128x128 wing atlas for the entire model.
+    private static final ResourceLocation BODY = ResourceLocation.parse("extrabotany:textures/entity/wing.png");
     private static final ResourceLocation WING = ResourceLocation.parse("extrabotany:textures/entity/wing.png");
     public LegacyVoidHerrscherRenderer(EntityRendererProvider.Context context) {
         super(context, new Model(), 0); addLayer(new ExtraLayer(this, false)); addLayer(new ExtraLayer(this, true));
@@ -49,9 +50,11 @@ public final class LegacyVoidHerrscherRenderer extends HumanoidMobRenderer<Legac
         }
         private static ModelPart layer() {
             var mesh = HumanoidModel.createMesh(CubeDeformation.NONE, 0); var root = mesh.getRoot(); var inflation = new CubeDeformation(.25F);
-            root.addOrReplaceChild("left_arm_wear", CubeListBuilder.create().texOffs(48, 48).mirror().addBox(-1, -2, -2, 4, 12, 4, inflation), PartPose.offset(5, 2, 0));
+            root.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(32, 48).addBox(-1, -2, -2, 4, 12, 4), PartPose.offset(5, 2, 0));
+            root.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(16, 48).addBox(-2, 0, -2, 4, 12, 4), PartPose.offset(1.9F, 12, 0));
+            root.addOrReplaceChild("left_arm_wear", CubeListBuilder.create().texOffs(48, 48).addBox(-1, -2, -2, 4, 12, 4, inflation), PartPose.offset(5, 2, 0));
             root.addOrReplaceChild("right_arm_wear", CubeListBuilder.create().texOffs(40, 32).addBox(-3, -2, -2, 4, 12, 4, inflation), PartPose.offset(-5, 2, 0));
-            root.addOrReplaceChild("left_leg_wear", CubeListBuilder.create().texOffs(0, 48).mirror().addBox(-2, 0, -2, 4, 12, 4, inflation), PartPose.offset(1.9F, 12, 0));
+            root.addOrReplaceChild("left_leg_wear", CubeListBuilder.create().texOffs(0, 48).addBox(-2, 0, -2, 4, 12, 4, inflation), PartPose.offset(1.9F, 12, 0));
             root.addOrReplaceChild("right_leg_wear", CubeListBuilder.create().texOffs(0, 32).addBox(-2, 0, -2, 4, 12, 4, inflation), PartPose.offset(-1.9F, 12, 0));
             root.addOrReplaceChild("body_wear", CubeListBuilder.create().texOffs(16, 32).addBox(-4, 0, -2, 8, 12, 4, inflation), PartPose.ZERO);
             root.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 64).addBox(0, 0, 0, 26, 32, 0), PartPose.offsetAndRotation(-30, -11, 5, 0, 0, -.1745329F));

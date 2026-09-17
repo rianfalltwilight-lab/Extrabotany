@@ -1,5 +1,5 @@
 {
-  "source": "extrabotany-neoforge-1.21.1-2.0-scex.1-gaia3-hotfix.jar (archived baseline; not included)",
+  "source": "[额外植物学：重燃] extrabotany-neoforge-1.21.1-2.0-scex.1-gaia3-hotfix.jar",
   "sha256": "8051956c2b045b9f28e78fe9c25b36235c83d118ab4823bcc31dc3c188857f42",
   "license_evidence": "META-INF/neoforge.mods.toml: MIT License; existing upstream MIT notice retained",
   "files": [

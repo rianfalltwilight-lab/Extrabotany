@@ -39,6 +39,11 @@ public final class LegacyFlowerWeapon extends ThrowableItemProjectile {
         builder.define(LIVE, 0); builder.define(DELAY, 0); builder.define(ROTATION, 0F);
     }
     public void configure(int variety, int delay, float rotation) { entityData.set(VARIETY, variety); entityData.set(DELAY, delay); entityData.set(ROTATION, rotation); }
+    public int variety() { return Math.floorMod(entityData.get(VARIETY), 17); }
+    public int liveTicks() { return entityData.get(LIVE); }
+    public int delay() { return entityData.get(DELAY); }
+    public int chargeTicks() { return entityData.get(CHARGE); }
+    public float rotation() { return entityData.get(ROTATION); }
     @Override protected Item getDefaultItem() { return LegacyKingGardenItem.INSTANCE; }
     @Override protected void onHit(HitResult hit) { /* Legacy weapons pass through blocks; swept living hits are handled below. */ }
     @Override public void tick() {

@@ -69,6 +69,7 @@ public class ForgeItemTagProvider extends net.minecraft.data.tags.ItemTagsProvid
 		tag(accessory("necklace")).add(pureDaisyPendant);
 		tag(accessory(("body"))).add(BODY);
 		tag(accessory("curio")).add(ALL_SLOT);
+		tag(accessory("curio")).add(io.github.lounode.extrabotany.common.item.legacy.LegacyAccessories.ITEMS.get("gem_of_conquest"));
 	}
 
 	private void generateToolTags() {

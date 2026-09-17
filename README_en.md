@@ -1,12 +1,13 @@
 # SCEX ExtraBotany 1.21.1
 
-**[2.0-scex.6-dev：直接下载运行 JAR / Download JAR](https://github.com/rianfalltwilight-lab/scex-extrabotany/releases/download/v2.0-scex.6-dev/extrabotany-neoforge-1.21.1-2.0-scex.6-dev.jar)** · [更新说明 / Release notes](docs/releases/2.0-scex.6-dev.md)
+最新冻结交付与验证边界 / Current frozen delivery: [release notes](docs/releases/2.0-scex.8-dev.md).
+**[2.0-scex.8-dev：直接下载运行 JAR / Download JAR](https://github.com/rianfalltwilight-lab/scex-extrabotany/releases/download/v2.0-scex.8-dev/extrabotany-neoforge-1.21.1-2.0-scex.8-dev.jar)** · [更新说明 / Release notes](docs/releases/2.0-scex.8-dev.md)
 
 > This is an unofficial Minecraft 1.21.1 / NeoForge port of ExtraBotany maintained by Space Creator EX (SCEX). The 1.21.1 port, fixes, tests, and public-release preparation were primarily assisted by OpenAI Codex under maintainer supervision. See [AI development disclosure](AI-GENERATED.md).
 
 [中文](README.md)
 
-The current public preview is **2.0-scex.6-dev**. It is based on [Lounode/ExtraBotany](https://github.com/Lounode/ExtraBotany) at `release-1.20.1-1.9.2` / `a4d4f2a968d559752fa3bd6e609544473109d983`. Upstream authorship, the MIT license, and resource credits are retained. This repository is not an official release from Lounode, Botania, or NeoForge.
+The current public preview is **2.0-scex.8-dev**. It is based on [Lounode/ExtraBotany](https://github.com/Lounode/ExtraBotany) at `release-1.20.1-1.9.2` / `a4d4f2a968d559752fa3bd6e609544473109d983`. Upstream authorship, the MIT license, and resource credits are retained. This repository is not an official release from Lounode, Botania, or NeoForge.
 
 ## Runtime baseline
 
@@ -21,7 +22,7 @@ The current public preview is **2.0-scex.6-dev**. It is based on [Lounode/ExtraB
 
 Download the runtime JAR from [Releases](https://github.com/rianfalltwilight-lab/scex-extrabotany/releases) and use the same file on both client and server. Do not install another JAR with the `extrabotany` mod ID. JEI and KubeJS integrations are optional.
 
-SCEX's forest-wand binding behavior is supplied by the separate [SCEX Botania / ExtraBotany forest-wand compatibility bridge](https://github.com/rianfalltwilight-lab/scex-botania-extrabotany-compat) `1.4.0`. It is not bundled with ExtraBotany and must be installed on both client and server. Version `1.4.0` only supports `2.0-scex.6-dev`; it handles selection, binding, and persistence for flower→spreader, flower→pool, and pool→Manalink interactions.
+SCEX's forest-wand binding behavior is supplied by the separate [SCEX Botania / ExtraBotany forest-wand compatibility bridge](https://github.com/rianfalltwilight-lab/scex-botania-extrabotany-compat) `1.4.2`. It is not bundled with ExtraBotany and must be installed on both client and server. Version `1.4.2` was validated with `2.0-scex.8-dev` and declares ExtraBotany `[2.0-scex.7-dev,3)`; it handles selection, binding, and persistence for flower→spreader, flower→pool, and pool→Manalink interactions.
 
 ## Restored scope
 
@@ -40,7 +41,7 @@ See [full restoration report](FULL_LEGACY_RESTORE.md), [porting record](PORTING.
 - A physical client checked 243 items, 34 entity renderers, and three restored armor sets.
 - The resource/JAR audit reported zero errors; two builds produced byte-identical runtime and sources JARs.
 
-These are bounded checks, not a gameplay-completion percentage. Full multiplayer boss fights, every mount control, every optional-mod combination, long-running load, and all GPU-specific rendering remain outside the proven scope. The archived `music.ego` has no audio, `flamescion_weapon` only has its original palette texture, and the butterfly projectile retains its unfinished upstream hit behavior.
+These are bounded checks, not a gameplay-completion percentage. Full multiplayer boss fights, every mount control, every optional-mod combination, long-running load, and all GPU-specific rendering remain outside the proven scope. The archived `music.ego` has no audio, the butterfly projectile retains its unfinished upstream hit behavior.
 
 ## Build and release
 

@@ -39,6 +39,7 @@ public final class LegacyArmorItem extends StarryIdolArmorItem implements ManaDi
     private LegacyArmorItem(String set, Holder<ArmorMaterial> material, Type type, int durability) {
         super(material, type, new Properties().durability(type.getDurability(durability))); this.set = set;
     }
+    public String armorSetId() { return set; }
     @Override public int getManaPerDamage() { return 70; }
     @Override public void inventoryTick(ItemStack stack, Level level, Entity owner, int slot, boolean selected) {
         triggerAdvancement(owner);

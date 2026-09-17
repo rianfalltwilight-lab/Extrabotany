@@ -992,5 +992,21 @@
   "extrabotany.message.herrscher.support61": "%s helped you ",
   "extrabotany.message.herrscher.support62": "%s helped you ",
   "subtitles.extrabotany:music.ego": "Ego music",
-  "subtitles.extrabotany:entity.motor.cyclone": "Motorcycle cyclone"
+  "subtitles.extrabotany:entity.motor.cyclone": "Motorcycle cyclone",
+  "message.extrabotany.spear.insufficient_mana": "The subspace domain requires 10,000 mana in a carried mana tablet or mana ring.",
+  "tooltip.extrabotany.power_glove": "While equipped, hold attack to repeat fully charged attacks. Mining is unaffected.",
+  "tooltip.extrabotany.flamescion_weapon.controls": "Sneak-use to ignite, then jump: attack to fire, use for a void field, press sneak again to dash.",
+  "tooltip.extrabotany.flamescion_weapon.ultimate_key": "Press %s while airborne and ignited for the ultimate. Hold the weapon to recover from overload.",
+  "key.extrabotany.legacy_skill": "Flamescion ultimate / Summon mount",
+  "key.categories.extrabotany": "Extra Botany",
+  "mri.ult0": "火火火火火火光光光光光光光",
+  "mri.ult1": "火红红红红红火火光光光光光",
+  "mri.ult2": "光火红红红红红红火光光光光",
+  "mri.ult3": "光光火红红红红红红火光光光",
+  "mri.ult4": "光光光火红红红红红红火光光",
+  "mri.ult5": "光光光光火红红红红红红火光",
+  "mri.ult6": "光光光光光火红红红红红红火",
+  "mri.ult7": "光光光光光光火火火火火火火",
+  "mri.sword": "剑气",
+  "mri.void": "黑洞"
 }

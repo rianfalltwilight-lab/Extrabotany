@@ -12,12 +12,15 @@ public class DamageHandler {
 	public static final DamageHandler INSTANCE = new DamageHandler();
 
 	public boolean checkPassable(Entity target, Entity source) {
+		if (target == null || !target.isAlive() || target.isSpectator()
+				|| target instanceof Player creative && creative.getAbilities().instabuild) return false;
 		if (target == source) {
 			return false;
 		}
 		if (source instanceof Player player) {
 			boolean peaceful = io.github.lounode.extrabotany.common.item.legacy.LegacyAccessories.worn("peace_amulet", player);
-			if (target instanceof Player targetPlayer) return !peaceful
+			if (target instanceof Player targetPlayer) return !peaceful && player.canHarmPlayer(targetPlayer)
+					&& (player.getServer() == null || player.getServer().isPvpAllowed())
 					&& !io.github.lounode.extrabotany.common.item.legacy.LegacyAccessories.worn("peace_amulet", targetPlayer);
 			if (peaceful && target instanceof Mob && !(target instanceof net.minecraft.world.entity.monster.Enemy)) return false;
 		}

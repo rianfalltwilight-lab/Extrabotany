@@ -28,6 +28,9 @@ public final class LegacyFlameArea extends LegacyOwnedEntity {
     private static final EntityDataAccessor<Float> ROTATION = SynchedEntityData.defineId(LegacyFlameArea.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> PITCH = SynchedEntityData.defineId(LegacyFlameArea.class, EntityDataSerializers.FLOAT);
     private final Kind kind;
+    public Kind kind() { return kind; }
+    public float rotation() { return entityData.get(ROTATION); }
+    public float pitch() { return entityData.get(PITCH); }
     private LegacyFlameArea(EntityType<? extends LegacyFlameArea> type, Level level, Kind kind) { super(type, level); this.kind = kind; }
     public static LegacyFlameArea create(Kind kind, LivingEntity owner, Vec3 position) {
         var area = new LegacyFlameArea(TYPES.get(kind), owner.level(), kind); area.setOwner(owner); area.setPos(position);
@@ -67,7 +70,9 @@ public final class LegacyFlameArea extends LegacyOwnedEntity {
         for (var target : source.level().getEntitiesOfClass(LivingEntity.class, source.getBoundingBox().inflate(range))) {
             if (target == owner || !DamageHandler.INSTANCE.checkPassable(target, owner)) continue;
             target.invulnerableTime = 0;
-            target.hurt(owner == null ? source.damageSources().magic() : source.damageSources().indirectMagic(source, owner), damage);
+            target.hurt(io.github.lounode.extrabotany.common.ExtraBotanyDamageTypes.Sources.source(source.level().registryAccess(),
+                    net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,
+                            net.minecraft.resources.ResourceLocation.parse("extrabotany:flamescion_flame")), source, owner), damage);
         }
     }
     @Override public boolean canBeCollidedWith() { return false; }

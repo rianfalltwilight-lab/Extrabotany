@@ -23,10 +23,10 @@ $content = @(
     "Source-Tree-SHA256=$($source.Hash)"
     "Source-File-Count=$($source.Count)"
     'Source-Tree-Hash-Algorithm=SHA-256 over ordinal-relative-path-sorted UTF-8 lines: lowercase-file-sha256 two-spaces relative-path newline'
-    'GameTests=24 frozen-candidate tests passed; bounded regression scope, not a gameplay completion rate'
+    'GameTests=38 frozen-candidate tests passed; bounded regression scope, not a gameplay completion rate'
     'Historical-scex5-Registry-Compatibility=zero missing inventoried legacy entries compared with the archived scex.1 baseline'
     'Historical-scex5-Old-World-Fixture=242 serialized item stacks and custom data reloaded unchanged'
-    'Physical-Client=matching bridge 1.4.0: 7 wand assertions and save/reload passed; full pack not rerun'
+    'Physical-Client=366 frozen-candidate assertions passed; matching bridge 1.4.2; full pack not rerun'
     'AI-Disclosure=OpenAI Codex assisted porting, testing, documentation, and release preparation under maintainer supervision'
 ) -join [char]10
 [System.IO.File]::WriteAllText((Join-Path $projectRoot 'BUILD-INFO.txt'), $content + [char]10,

@@ -20,6 +20,7 @@
     "botania.LegacyBoxEquipmentMixin"
   ],
   "client": [
+    "client.PowerGloveInputMixin",
     "client.PatchouliTemplateXModMixin",
     "client.HUDHandlerMixin",
     "client.PatchouliTemplateXModMixinBuilder"

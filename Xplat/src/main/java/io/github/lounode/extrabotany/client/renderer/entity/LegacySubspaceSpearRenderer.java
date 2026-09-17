@@ -19,7 +19,7 @@ public final class LegacySubspaceSpearRenderer extends EntityRenderer<LegacySubs
     private static final ResourceLocation TEXTURE = ResourceLocation.parse("extrabotany:textures/entity/spearsubspace.png");
     private final ModelPart model;
     public LegacySubspaceSpearRenderer(EntityRendererProvider.Context context) { super(context); model = mesh(); }
-    private static ModelPart mesh() {
+    static ModelPart mesh() {
         // Exact archived model UVs and cubes, mapped into the maintained model builder.
         float[][] boxes = {{10,0,0,-.5F,0,2,3,2},{10,0,0,0,-.5F,2,2,3},{10,0,-.5F,0,0,3,2,2},
                 {26,0,.5F,7,.5F,1,16,1},{26,0,0,8,0,1,10,1},{26,0,1,6,1,1,9,1},{26,0,1,5,0,1,9,1},{26,0,0,7,1,1,7,1},
@@ -33,8 +33,10 @@ public final class LegacySubspaceSpearRenderer extends EntityRenderer<LegacySubs
         return LayerDefinition.create(mesh, 64, 32).bakeRoot().getChild("spear");
     }
     @Override public void render(LegacySubspaceSpear entity, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
-        pose.pushPose(); pose.translate(.5F, 1.5F, .5F); pose.mulPose(Axis.YP.rotationDegrees(entity.getYRot()));
-        pose.mulPose(Axis.XP.rotationDegrees(90)); pose.mulPose(Axis.XP.rotationDegrees(entity.getXRot())); pose.scale(.07F, -.07F, -.07F);
+        pose.pushPose(); pose.translate(.5F, 1.5F, .5F); pose.mulPose(Axis.YP.rotationDegrees(180 + entity.getYRot()));
+        pose.mulPose(Axis.XP.rotationDegrees(90)); pose.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
+        // ModelPart converts pixels to blocks internally (/16); old ModelRenderer.render(.07) did not.
+        pose.scale(1.12F, -1.12F, -1.12F);
         model.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, OverlayTexture.NO_OVERLAY, -1);
         pose.popPose(); super.render(entity, yaw, partial, pose, buffers, light);
     }

@@ -15,6 +15,9 @@ import io.github.lounode.extrabotany.common.item.equipment.armor.pleiades_combat
 import io.github.lounode.extrabotany.common.item.equipment.armor.shadow_warrior.ShadowWarriorArmorItem;
 import io.github.lounode.extrabotany.common.item.equipment.armor.starry_idol.StarryIdolArmorItem;
 
+import io.github.lounode.extrabotany.client.model.armor.LegacyArmorMeshes;
+import io.github.lounode.extrabotany.common.item.legacy.LegacyArmorItem;
+
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
@@ -25,6 +28,8 @@ public class ArmorModels {
 	private static Map<EquipmentSlot, ArmorModel> pleiadesCombatMaid = Collections.emptyMap();
 	private static Map<EquipmentSlot, ArmorModel> shadowWarrior = Collections.emptyMap();
 	private static Map<EquipmentSlot, ArmorModel> goblinSlayer = Collections.emptyMap();
+	private static Map<EquipmentSlot, ArmorModel> miku = Collections.emptyMap();
+	private static Map<EquipmentSlot, ArmorModel> shootingGuardian = Collections.emptyMap();
 	private static Map<EquipmentSlot, ArmorModel> legacy = Collections.emptyMap();
 
 	private static Map<EquipmentSlot, ArmorModel> make(EntityRendererProvider.Context ctx, ModelLayerLocation inner, ModelLayerLocation outer) {
@@ -54,7 +59,18 @@ public class ArmorModels {
 		return ret;
 	}
 
+	private static Map<EquipmentSlot, ArmorModel> makeOriginal(boolean isMiku) {
+		Map<EquipmentSlot, ArmorModel> models = new EnumMap<>(EquipmentSlot.class);
+		for (var slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
+			var definition = isMiku ? LegacyArmorMeshes.mikuArmor(slot) : LegacyArmorMeshes.shootingGuardianArmor(slot);
+			models.put(slot, new ArmorModel(definition.bakeRoot(), slot));
+		}
+		return models;
+	}
+
 	public static void init(EntityRendererProvider.Context ctx) {
+		miku = makeOriginal(true);
+		shootingGuardian = makeOriginal(false);
 		legacy = make(ctx, ExtrabotanyModelLayers.SHADOW_WARRIOR_ARMOR_LEGGINGS, ExtrabotanyModelLayers.SHADOW_WARRIOR_ARMOR_NORMAL);
 		starryIdol = makeIdol(ctx, ExtrabotanyModelLayers.STARRY_IDOL_ARMOR_NORMAL, ExtrabotanyModelLayers.STARRY_IDOL_ARMOR_DRESS);
 		pleiadesCombatMaid = makeIdol(ctx, ExtrabotanyModelLayers.PLEIADES_COMBAT_MAID_ARMOR_NORMAL, ExtrabotanyModelLayers.PLEIADES_COMBAT_MAID_ARMOR_DRESS);
@@ -78,7 +94,13 @@ public class ArmorModels {
 		}
 
 		if (item instanceof StarryIdolArmorItem idol) {
-			if (item instanceof io.github.lounode.extrabotany.common.item.legacy.LegacyArmorItem) return legacy.get(idol.getEquipmentSlot());
+			if (item instanceof LegacyArmorItem armor) {
+				return switch (armor.armorSetId()) {
+					case "miku" -> miku.get(idol.getEquipmentSlot());
+					case "shootingguardian" -> shootingGuardian.get(idol.getEquipmentSlot());
+					default -> legacy.get(idol.getEquipmentSlot());
+				};
+			}
 			return starryIdol.get(idol.getEquipmentSlot());
 		}
 

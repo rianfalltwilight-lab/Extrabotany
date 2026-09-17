@@ -70,9 +70,23 @@ public final class HUD {
 
 		profiler.push("manaBar");
 		renderManaBar(gui, partialTicks);
+		renderFlamescionBar(gui);
 		profiler.pop();
 
 		profiler.pop();
+	}
+	private void renderFlamescionBar(GuiGraphics gui) {
+		var player = minecraft.player;
+		if (player == null || player.isSpectator() || player.isPassenger()
+				|| !player.getMainHandItem().is(io.github.lounode.extrabotany.common.item.legacy.LegacyFlamescionItem.INSTANCE)) return;
+		var stack = player.getMainHandItem();
+		int x = gui.guiWidth() / 2 - 32, y = gui.guiHeight() - 56;
+		var texture = ResourceLocation.parse("extrabotany:textures/gui/flamescionhud.png");
+		int amount = 64 * io.github.lounode.extrabotany.common.item.legacy.LegacyFlamescionItem.energy(stack) / 600;
+		RenderSystem.enableBlend();
+		gui.blit(texture, x, y, 0, 0, 64, 6, 256, 256);
+		gui.blit(texture, x, y, 0, io.github.lounode.extrabotany.common.item.legacy.LegacyFlamescionItem.overloaded(stack) ? 12 : 6, amount, 6, 256, 256);
+		RenderSystem.disableBlend();
 	}
 
 	private void renderManaBar(GuiGraphics gui, float partialTicks) {

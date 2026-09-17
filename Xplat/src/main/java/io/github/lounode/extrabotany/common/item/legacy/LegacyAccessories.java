@@ -40,6 +40,14 @@ public final class LegacyAccessories extends BaubleItem {
     }
     private LegacyAccessories(String id) { super(new Item.Properties().stacksTo(1)); this.id = id; }
 
+    @Override public void appendHoverText(ItemStack stack, TooltipContext context,
+            java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flags) {
+        super.appendHoverText(stack, context, tooltip, flags);
+        if (id.equals("gem_of_conquest") || id.equals("power_glove"))
+            tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.extrabotany." + id)
+                    .withStyle(net.minecraft.ChatFormatting.GRAY));
+    }
+
     public static boolean worn(String id, LivingEntity user) {
         Item item = ITEMS.get(id);
         return item != null && !EquipmentHandler.findOrEmpty(item, user).isEmpty();

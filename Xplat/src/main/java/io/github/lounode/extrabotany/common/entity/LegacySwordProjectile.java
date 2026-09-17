@@ -102,7 +102,7 @@ public final class LegacySwordProjectile extends ThrowableItemProjectile {
         return target.hurt(source, kind.damage + attackBonus);
     }
     public static void trueMagicDamage(LivingEntity target, net.minecraft.world.entity.Entity owner, float amount) {
-        if (!target.isAlive() || !Float.isFinite(amount) || amount <= 0) return;
+        if (!target.isAlive() || !Float.isFinite(amount) || amount <= 0 || !DamageHandler.INSTANCE.checkPassable(target, owner)) return;
         var source = target.damageSources().indirectMagic(owner == null ? target : owner, owner);
         if (target.getHealth() <= amount) target.hurt(source, Float.MAX_VALUE);
         else { target.setHealth(Math.max(1, target.getHealth() - amount)); target.hurt(source, .01F); }

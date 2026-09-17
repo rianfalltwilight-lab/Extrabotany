@@ -16,19 +16,14 @@ public final class LegacyPhantomRenderer extends EntityRenderer<LegacyPhantomSwo
         if (entity.delay() > 0) return;
         float alpha = entity.fake() ? Math.max(0, .6F - (entity.tickCount + partial) * .015F) : 1;
         if (alpha <= 0) return;
-        var velocity = entity.getDeltaMovement();
-        float heading = velocity.lengthSqr() > 1E-6 ? (float) Math.toDegrees(Math.atan2(velocity.x, velocity.z)) : entity.getYRot();
-        float angle = velocity.lengthSqr() > 1E-6 ? (float) Math.toDegrees(Math.atan2(velocity.horizontalDistance(), velocity.y)) : 90 - entity.getXRot();
-        pose.pushPose(); pose.mulPose(Axis.YP.rotationDegrees(heading)); pose.mulPose(Axis.XP.rotationDegrees(angle));
-        pose.mulPose(Axis.ZP.rotationDegrees(45)); pose.scale(1.5F, 1.5F, 1.5F);
-        var vertex = buffers.getBuffer(RenderType.entityTranslucent(getTextureLocation(entity)));
-        float[][] corners = {{-.5F,-.5F,0,1},{.5F,-.5F,1,1},{.5F,.5F,1,0},{-.5F,.5F,0,0}};
-        for (var corner : corners) vertex.addVertex(pose.last().pose(), corner[0], corner[1], 0)
-                .setColor((int) (alpha * 255) << 24 | 0xFFFFFF).setUv(corner[2], corner[3])
-                .setOverlay(OverlayTexture.NO_OVERLAY).setLight(0xF000F0).setNormal(0, 0, 1);
+        pose.pushPose(); pose.scale(1.5F, 1.5F, 1.5F);
+        // Modern yaw is atan2(dx,dz); upstream getRotation() is that angle +180.
+        pose.mulPose(Axis.YP.rotationDegrees(entity.getYRot() + 270));
+        pose.mulPose(Axis.ZP.rotationDegrees(entity.getXRot() - 135));
+        LegacyIconRenderer.render(LegacyBossSupportRenderer.swordModel(entity.variety()), pose, buffers, alpha);
         pose.popPose(); super.render(entity, yaw, partial, pose, buffers, light);
     }
     @Override public ResourceLocation getTextureLocation(LegacyPhantomSword entity) {
-        return ResourceLocation.parse("extrabotany:textures/item/sworddomain_" + Math.floorMod(entity.variety(), 10) + ".png");
+        return net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS;
     }
 }

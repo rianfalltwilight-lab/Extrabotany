@@ -72,6 +72,8 @@ public final class NeoForgeEventBridge {
         bus.addListener(NeoForgeEventBridge::onAttackEntity);
         bus.addListener(NeoForgeEventBridge::onLeftClickEmpty);
         bus.addListener((PlayerInteractEvent.LeftClickBlock event) -> {
+            if (event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND)
+                io.github.lounode.extrabotany.common.item.legacy.LegacyFlamescionItem.attack(event.getEntity());
             if (event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
                     && !(event.getItemStack().getItem() instanceof io.github.lounode.extrabotany.common.item.legacy.LegacySubspaceSpearItem)
                     && event.getItemStack().getItem() instanceof io.github.lounode.extrabotany.common.item.legacy.LegacyRelicSword sword)
@@ -82,6 +84,8 @@ public final class NeoForgeEventBridge {
         bus.addListener(NeoForgeEventBridge::onItemAttributeModifier);
         bus.addListener(NeoForgeEventBridge::onPlayerLoggedOut);
         bus.addListener(NeoForgeEventBridge::onPlayerTickPost);
+        bus.addListener((PlayerEvent.Clone event) -> io.github.lounode.extrabotany.common.item.legacy.LegacyFlamescionItem.cloneState(
+                event.getOriginal(), event.getEntity(), event.isWasDeath()));
         bus.addListener(NeoForgeEventBridge::onSoundAtPosition);
         bus.addListener(NeoForgeEventBridge::onSoundAtEntity);
     }

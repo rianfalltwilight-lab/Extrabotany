@@ -1,6 +1,5 @@
 package io.github.lounode.extrabotany.forge.client;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import io.github.lounode.extrabotany.common.entity.LegacyMount;
 import io.github.lounode.extrabotany.forge.network.LegacyMountPacket;
 import net.minecraft.client.Minecraft;
@@ -18,7 +17,7 @@ public final class LegacyMountInput {
     @SubscribeEvent public static void tick(ClientTickEvent.Post event) {
         var minecraft = Minecraft.getInstance();
         if (minecraft.player == null) { mountDown = false; shiftDown = false; previous = -1; return; }
-        boolean summon = minecraft.screen == null && InputConstants.isKeyDown(minecraft.getWindow().getWindow(), 82);
+        boolean summon = minecraft.screen == null && LegacyKeyMappings.SKILL.isDown();
         boolean flameMode = io.github.lounode.extrabotany.common.item.legacy.LegacyFlamescionItem.mode(minecraft.player);
         if (summon && !mountDown) {
             if (flameMode) PacketDistributor.sendToServer(new io.github.lounode.extrabotany.forge.network.LegacyFlameSkillPacket(true));

@@ -37,17 +37,19 @@ public final class EntityRenderers {
 		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyMount.UFO, context -> new LegacyMountRenderer(context, true));
 		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyMount.MOTOR, context -> new LegacyMountRenderer(context, false));
 		io.github.lounode.extrabotany.common.entity.LegacySwordProjectile.TYPES.values().forEach(type -> consumer.accept(type, LegacySwordRenderer::new));
-		io.github.lounode.extrabotany.common.entity.LegacyFlameArea.TYPES.values().forEach(type -> consumer.accept(type, net.minecraft.client.renderer.entity.NoopRenderer::new));
-		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyFlameProjectile.STRENGTHEN, net.minecraft.client.renderer.entity.NoopRenderer::new);
-		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyFlameProjectile.SWORD, net.minecraft.client.renderer.entity.NoopRenderer::new);
-		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacySubspace.TYPE, net.minecraft.client.renderer.entity.NoopRenderer::new);
+		io.github.lounode.extrabotany.common.entity.LegacyFlameArea.TYPES.values().forEach(type -> consumer.accept(type, LegacyFlameRenderer::new));
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyFlameProjectile.STRENGTHEN, LegacyFlameRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyFlameProjectile.SWORD, LegacyFlameRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacySubspace.TYPE, LegacySubspaceRenderer::new);
 		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacySubspaceSpear.TYPE, LegacySubspaceSpearRenderer::new);
-		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyJudahEntity.OATH, ThrownItemRenderer::new);
-		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyJudahEntity.SPEAR, ThrownItemRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyJudahEntity.OATH, LegacyJudahRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyJudahEntity.SPEAR, LegacyJudahRenderer::new);
 		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyJudahSword.TYPE, net.minecraft.client.renderer.entity.NoopRenderer::new);
 		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyPhantomSword.TYPE, LegacyPhantomRenderer::new);
-		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyFlowerWeapon.TYPE, ThrownItemRenderer::new);
-		io.github.lounode.extrabotany.common.entity.LegacyProjectile.TYPES.values().forEach(type -> consumer.accept(type, ThrownItemRenderer::new));
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyFlowerWeapon.TYPE, LegacyFlowerWeaponRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyProjectile.TYPES.get(io.github.lounode.extrabotany.common.entity.LegacyProjectile.Kind.BUTTERFLY), LegacyProjectileRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyProjectile.TYPES.get(io.github.lounode.extrabotany.common.entity.LegacyProjectile.Kind.BOTTLED_STAR), LegacyProjectileRenderer::new);
+		consumer.accept(io.github.lounode.extrabotany.common.entity.LegacyProjectile.TYPES.get(io.github.lounode.extrabotany.common.entity.LegacyProjectile.Kind.PHOTON), ThrownItemRenderer::new);
 		consumer.accept(ExtraBotanyEntityType.AURA_FIRE, NoopRenderer::new);
 		consumer.accept(ExtraBotanyEntityType.MAGIC_LANDMINE, MagicLandMineRenderer::new);
 		consumer.accept(ExtraBotanyEntityType.GAIA_LEGACY, GaiaRenderer::new);
@@ -60,6 +62,9 @@ public final class EntityRenderers {
 	}
 
 	public static void registerBlockEntityRenderers(BERConsumer consumer) {
+		consumer.register(io.github.lounode.extrabotany.common.block.legacy.LegacyMachineBlock.TYPES.get(
+				io.github.lounode.extrabotany.common.block.legacy.LegacyMachineBlock.Kind.QUANTUM),
+				io.github.lounode.extrabotany.client.renderer.blockentity.LegacyQuantumRenderer::new);
 		consumer.register(ExtrabotanyFlowerBlocks.STARDUST_LOTUS, SpecialFlowerBlockEntityRenderer::new);
 		consumer.register(ExtraBotanyBlockEntities.PEDESTAL, PedestalRenderer::new);
 		consumer.register(ExtraBotanyBlockEntities.MANA_CHARGER, ManaChargerRenderer::new);

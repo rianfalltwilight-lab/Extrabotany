@@ -92,8 +92,17 @@ public class GaiaRenderer extends HumanoidMobRenderer<Gaia, HumanoidModel<Gaia>>
 	}
 
 	private static class Model extends HumanoidModel<Gaia> {
+		private final java.util.List<ModelPart> wear;
 		Model(ModelPart root) {
 			super(root, RenderHelper::getGaiaNoiseDynamicLayer);
+			wear = java.util.List.of(root.getChild("jacket"), root.getChild("left_sleeve"), root.getChild("right_sleeve"),
+					root.getChild("left_pants"), root.getChild("right_pants"));
+		}
+		@Override protected Iterable<ModelPart> bodyParts() { return com.google.common.collect.Iterables.concat(super.bodyParts(), wear); }
+		@Override public void setupAnim(Gaia entity, float limb, float amount, float age, float yaw, float pitch) {
+			super.setupAnim(entity, limb, amount, age, yaw, pitch);
+			var parts=java.util.List.of(body, leftArm, rightArm, leftLeg, rightLeg);
+			for(int i=0;i<wear.size();i++)wear.get(i).copyFrom(parts.get(i));
 		}
 	}
 

@@ -29,7 +29,7 @@ public final class LegacySubspaceSpear extends ThrowableItemProjectile {
         if (level().isClientSide()) { level().addParticle(ParticleTypes.END_ROD, getX(), getY(), getZ(), 0, 0, 0); return; }
         var owner = getOwner();
         for (var target : level().getEntitiesOfClass(LivingEntity.class, new AABB(getX(), getY(), getZ(), xOld, yOld, zOld).inflate(1, .45, 1))) {
-            if (target.hurtTime > 0 || !DamageHandler.INSTANCE.checkPassable(target, owner)) continue;
+            if (target.invulnerableTime > 0 || !DamageHandler.INSTANCE.checkPassable(target, owner)) continue;
             float amount = damage * .4F;
             if (target.isAlive() && Float.isFinite(amount) && amount > 0) {
                 var magic = damageSources().indirectMagic(this, owner);

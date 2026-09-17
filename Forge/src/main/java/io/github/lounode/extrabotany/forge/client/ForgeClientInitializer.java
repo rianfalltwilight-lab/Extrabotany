@@ -145,6 +145,14 @@ public class ForgeClientInitializer {
 	}
 
 	@SubscribeEvent
+	public static void addPlayerLayers(EntityRenderersEvent.AddLayers evt) {
+		for (var skin : evt.getSkins()) {
+			net.minecraft.client.renderer.entity.player.PlayerRenderer renderer = evt.getSkin(skin);
+			if (renderer != null) renderer.addLayer(new io.github.lounode.extrabotany.client.renderer.LegacyFlamescionLayer(renderer));
+		}
+	}
+
+	@SubscribeEvent
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers evt) {
 		EntityRenderers.registerBlockEntityRenderers(evt::registerBlockEntityRenderer);
 		EntityRenderers.registerEntityRenderers(evt::registerEntityRenderer);
@@ -162,6 +170,17 @@ public class ForgeClientInitializer {
 
 	@SubscribeEvent
 	public static void onModelRegister(ModelEvent.RegisterAdditional evt) {
+		evt.register(ModelResourceLocation.standalone(io.github.lounode.extrabotany.client.renderer.entity.LegacyProjectileRenderer.BUTTERFLY));
+		for (int i = 0; i < 17; i++) evt.register(ModelResourceLocation.standalone(
+				io.github.lounode.extrabotany.client.renderer.entity.LegacyFlowerWeaponRenderer.model(i)));
+		for (int i = 0; i < 4; i++) evt.register(ModelResourceLocation.standalone(
+				io.github.lounode.extrabotany.client.renderer.entity.LegacyJudahRenderer.model(true, i)));
+		for (int i = 0; i < 3; i++) evt.register(ModelResourceLocation.standalone(
+				io.github.lounode.extrabotany.client.renderer.entity.LegacyJudahRenderer.model(false, i)));
+		evt.register(ModelResourceLocation.standalone(io.github.lounode.extrabotany.client.renderer.entity.LegacyFlameRenderer.STRENGTHEN_MODEL));
+		evt.register(ModelResourceLocation.standalone(io.github.lounode.extrabotany.client.renderer.LegacyFlamescionLayer.MODEL));
+		for (int i = 0; i < 10; i++) evt.register(ModelResourceLocation.standalone(
+				io.github.lounode.extrabotany.client.renderer.entity.LegacyBossSupportRenderer.swordModel(i)));
 		var resourceManager = Minecraft.getInstance().getResourceManager();
 		ExtraBotanyModels.INSTANCE.onModelRegister(resourceManager,
 				id -> evt.register(ModelResourceLocation.standalone(id)));

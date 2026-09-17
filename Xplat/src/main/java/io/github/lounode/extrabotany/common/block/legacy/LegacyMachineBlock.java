@@ -34,6 +34,9 @@ public final class LegacyMachineBlock extends BotaniaWaterloggedBlock implements
     }
     private final Kind kind;
     private LegacyMachineBlock(Kind kind,Properties properties) { super(properties);this.kind=kind; }
+    @Override public net.minecraft.world.level.block.RenderShape getRenderShape(BlockState state) {
+        return kind == Kind.QUANTUM ? net.minecraft.world.level.block.RenderShape.ENTITYBLOCK_ANIMATED : super.getRenderShape(state);
+    }
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state) { return new LegacyMachineEntity(kind,pos,state); }
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level,BlockState state,BlockEntityType<T> type) {
         return level.isClientSide()?null:createTickerHelper(type,TYPES.get(kind),(world,pos,block,entity)->entity.serverTick());

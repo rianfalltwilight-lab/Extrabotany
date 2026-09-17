@@ -173,6 +173,7 @@ tasks.withType(Jar).configureEach {
 }
 
 tasks.named("jar", Jar).configure {
+    exclude "io/github/lounode/extrabotany/forge/gametest/**"
     from("LICENSE")
     manifest {
         attributes([
@@ -185,6 +186,14 @@ tasks.named("jar", Jar).configure {
                 "MixinConfigs": "extrabotany_xplat.mixins.json,extrabotany_neoforge.mixins.json"
         ])
     }
+}
+
+// Opt-in validation artifact; never distribute the test entry points to players.
+tasks.register("validationJar", Jar) {
+    archiveClassifier = "validation"
+    from sourceSets.main.output
+    from("LICENSE")
+    manifest.from(tasks.named("jar", Jar).get().manifest)
 }
 
 publishing {

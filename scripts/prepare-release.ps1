@@ -57,7 +57,7 @@ $manifest = [ordered]@{
     java = '21'
     sourceFileCount = $source.Count
     sourceTreeSHA256 = $source.Hash
-    validation = [ordered]@{ gameTests = '24/24'; missingLegacyRegistryEntries = 0; historicalScex5OldWorldItemStacksReloaded = 242; resourceAuditErrors = 0; reproducibleRuntimeAndSourcesJars = $true }
+    validation = [ordered]@{ gameTests = '38/38'; physicalClientAssertions = '366/366'; missingLegacyRegistryEntries = 0; historicalScex5OldWorldItemStacksReloaded = 242; resourceAuditErrors = 0; reproducibleRuntimeAndSourcesJars = $null; independentPublicRebuildRetested = $false }
     artifacts = $artifactData
     aiAssisted = $true
     provenance = 'See NOTICE, AI-GENERATED.md, and compatibility/*-resource-provenance.json in the source tree.'
