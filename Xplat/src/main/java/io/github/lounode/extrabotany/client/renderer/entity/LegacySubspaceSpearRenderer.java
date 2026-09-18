@@ -17,6 +17,9 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class LegacySubspaceSpearRenderer extends EntityRenderer<LegacySubspaceSpear> {
     private static final ResourceLocation TEXTURE = ResourceLocation.parse("extrabotany:textures/entity/spearsubspace.png");
+    private static final float MODEL_CENTER_X = 1F / 16F;
+    private static final float MODEL_CENTER_Y = -.5F / 16F;
+    private static final float MODEL_CENTER_Z = 1F / 16F;
     private final ModelPart model;
     public LegacySubspaceSpearRenderer(EntityRendererProvider.Context context) { super(context); model = mesh(); }
     static ModelPart mesh() {
@@ -33,10 +36,16 @@ public final class LegacySubspaceSpearRenderer extends EntityRenderer<LegacySubs
         return LayerDefinition.create(mesh, 64, 32).bakeRoot().getChild("spear");
     }
     @Override public void render(LegacySubspaceSpear entity, float yaw, float partial, PoseStack pose, MultiBufferSource buffers, int light) {
-        pose.pushPose(); pose.translate(.5F, 1.5F, .5F); pose.mulPose(Axis.YP.rotationDegrees(180 + entity.getYRot()));
+        pose.pushPose();
+        // Entity render coordinates already point at the hitbox anchor. The archived renderer's
+        // (+.5, +1.5, +.5) block-style offset put the entire model outside that box on 1.21.1.
+        pose.translate(0, entity.getBbHeight() * .5F, 0);
+        pose.mulPose(Axis.YP.rotationDegrees(180 + entity.getYRot()));
         pose.mulPose(Axis.XP.rotationDegrees(90)); pose.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
         // ModelPart converts pixels to blocks internally (/16); old ModelRenderer.render(.07) did not.
         pose.scale(1.12F, -1.12F, -1.12F);
+        // The Techne model is centred on (1, -.5, 1) pixels, not the ModelPart origin.
+        pose.translate(-MODEL_CENTER_X, -MODEL_CENTER_Y, -MODEL_CENTER_Z);
         model.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, OverlayTexture.NO_OVERLAY, -1);
         pose.popPose(); super.render(entity, yaw, partial, pose, buffers, light);
     }

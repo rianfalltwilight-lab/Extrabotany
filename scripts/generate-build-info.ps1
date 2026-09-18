@@ -26,7 +26,7 @@ $content = @(
     'GameTests=38 frozen-candidate tests passed; bounded regression scope, not a gameplay completion rate'
     'Historical-scex5-Registry-Compatibility=zero missing inventoried legacy entries compared with the archived scex.1 baseline'
     'Historical-scex5-Old-World-Fixture=242 serialized item stacks and custom data reloaded unchanged'
-    'Physical-Client=366 frozen-candidate assertions passed; matching bridge 1.4.2; full pack not rerun'
+    'Physical-Client=368 frozen-candidate assertions passed; matching bridge 1.4.2; full pack not rerun'
     'AI-Disclosure=OpenAI Codex assisted porting, testing, documentation, and release preparation under maintainer supervision'
 ) -join [char]10
 [System.IO.File]::WriteAllText((Join-Path $projectRoot 'BUILD-INFO.txt'), $content + [char]10,

@@ -17,7 +17,9 @@ import net.minecraft.world.phys.HitResult;
 
 public final class LegacySubspaceSpear extends ThrowableItemProjectile {
     public static final EntityType<LegacySubspaceSpear> TYPE = EntityType.Builder.<LegacySubspaceSpear>of(LegacySubspaceSpear::new, MobCategory.MISC)
-            .sized(.35F, .35F).clientTrackingRange(8).updateInterval(2).build("extrabotany:subspace_spear");
+            // The rendered shaft is long, but its cross-section is about half a block.
+            // Movement supplies the longitudinal sweep; this box represents the spear at its anchor.
+            .sized(.5F, .5F).clientTrackingRange(8).updateInterval(2).build("extrabotany:subspace_spear");
     private float damage = 12;
     private int life = 100;
     public LegacySubspaceSpear(EntityType<? extends LegacySubspaceSpear> type, Level level) { super(type, level); setNoGravity(true); }

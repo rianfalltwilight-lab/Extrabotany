@@ -78,7 +78,14 @@ public final class UpstreamRenderProbe extends Screen {
             boolean particleOnly=entity.getType()==io.github.lounode.extrabotany.common.entity.ExtraBotanyEntityType.AURA_FIRE || entity instanceof LegacyJudahSword;
             check(counter.vertices>0||particleOnly,"entity_has_original_geometry_or_particles_"+name);
             rows.add(Map.of("id",name,"renderer",renderer.getClass().getSimpleName(),"vertices",counter.vertices,"bounds",counter.bounds(),"particle_only",particleOnly));
-            if(entity instanceof LegacySubspaceSpear)check(counter.maxExtent()>3,"spear_uses_original_world_scale");
+            if(entity instanceof LegacySubspaceSpear spear){
+                check(counter.maxExtent()>3,"spear_uses_original_world_scale");
+                float centerX=(counter.minX+counter.maxX)*.5F,centerY=(counter.minY+counter.maxY)*.5F,centerZ=(counter.minZ+counter.maxZ)*.5F;
+                check(Math.abs(centerX)<.02F&&Math.abs(centerY-spear.getBbHeight()*.5F)<.02F&&Math.abs(centerZ)<.02F,
+                        "spear_visual_center_matches_collision_box");
+                check(counter.maxX-counter.minX<=spear.getBbWidth()+.01F&&counter.maxY-counter.minY<=spear.getBbHeight()+.01F,
+                        "spear_visual_cross_section_fits_collision_box");
+            }
             if(entity instanceof LegacyVoidHerrscher)check(renderer.getTextureLocation(entity).toString().equals("extrabotany:textures/entity/wing.png"),"herrscher_binds_original_128_atlas");
             if(entity.getType()==LegacyMount.MOTOR)check(counter.vertices==66*24,"motor_66_original_cuboids_rendered");
         }
